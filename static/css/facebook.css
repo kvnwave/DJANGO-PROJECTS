@@ -16,7 +16,6 @@
   --radius: 8px;
   --radius-lg: 12px;
   --topbar-h: 56px;
-  --nav-h: 62px;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
@@ -28,7 +27,6 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  padding-bottom: calc(var(--nav-h) + 20px);
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
@@ -771,73 +769,6 @@ textarea.composer-input::placeholder { color: var(--text-soft); }
 
 .post-caption .more { color: var(--text-soft); }
 
-/* ---------- Bottom navigation ---------- */
-
-.bottomnav {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 60;
-  height: var(--nav-h);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 44px;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-}
-
-.bn-item {
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  border: 0;
-  border-radius: 50%;
-  background: none;
-  color: var(--text-soft);
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.15s, color 0.15s;
-}
-
-.bn-item:hover { background: var(--bg); color: var(--text); }
-
-.bn-item.on { color: var(--accent); }
-
-.bn-create {
-  width: 54px;
-  height: 54px;
-  margin-top: -26px;
-  flex: none;
-  display: grid;
-  place-items: center;
-  border: 4px solid var(--surface);
-  border-radius: 50%;
-  background: var(--accent);
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(124, 58, 237, 0.4);
-  transition: background 0.15s;
-}
-
-.bn-create:hover { background: var(--accent-dark); }
-
-.bn-avatar {
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  overflow: hidden;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.bn-avatar img { width: 100%; height: 100%; object-fit: cover; }
-
 /* ---------- Modal ---------- */
 
 .modal { position: fixed; inset: 0; z-index: 100; display: none; }
@@ -1012,8 +943,6 @@ textarea.composer-input::placeholder { color: var(--text-soft); }
   .cover { height: 220px; }
 
   .avatar.xl { width: 128px; height: 128px; font-size: 40px; }
-
-  .bottomnav { gap: 32px; }
 }
 
 @media (max-width: 560px) {
@@ -1024,6 +953,4 @@ textarea.composer-input::placeholder { color: var(--text-soft); }
   .name { font-size: 22px; }
 
   .row-2 { grid-template-columns: 1fr; }
-
-  .bottomnav { gap: 22px; }
 }
