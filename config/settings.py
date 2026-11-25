@@ -9,8 +9,13 @@ Environment variables:
     DJANGO_DEBUG=1              turn DEBUG on (local development)
     DJANGO_SECRET_KEY=...       secret key for the deployed site
     DJANGO_ALLOWED_HOSTS=...    extra hosts, comma separated
+
+`runserver` is always local development, so it defaults to DEBUG=1 (static
+and media files are only served in DEBUG). Deployed servers keep DEBUG=0
+unless DJANGO_DEBUG is set.
 """
 import os
+import sys
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,6 +26,8 @@ SECRET_KEY = os.environ.get(
 )
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "0") == "1"
+if "runserver" in sys.argv:
+    DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
 
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", "[::1]", ".pythonanywhere.com"]
 ALLOWED_HOSTS += [
