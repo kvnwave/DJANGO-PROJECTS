@@ -6,24 +6,24 @@ from .forms import PostForm, ProfileForm
 from .models import Profile
 
 SAMPLE_FRIENDS = (
-    "Marco Reyes",
-    "Althea Cruz",
-    "Rafael Santos",
-    "Bianca Lim",
-    "Joshua Tan",
-    "Camille Garcia",
-    "Adrian Bautista",
-    "Sofia Ramos",
-    "Miguel Torres",
+    "Ramy Mirza",
+    "Victoire Desgraves",
+    "Letty Price",
+    "Anthony Ribben",
+    "Griffin Harley",
+    "Evie Brooke",
+    "Professor Lovell",
+    "Professor Playfair",
+    "Mrs. Piper",
 )
 
 SAMPLE_STORIES = (
-    ("mindcast", 0),
-    ("vibeteller", 1),
-    ("moodrealms", 2),
-    ("inkdrop", 3),
-    ("softpulse", 4),
-    ("dreamwave", 5),
+    ("ramy", 0),
+    ("victoire", 1),
+    ("letty", 2),
+    ("griffin", 3),
+    ("anthony", 4),
+    ("evie", 5),
 )
 
 
