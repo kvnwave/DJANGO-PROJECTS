@@ -73,7 +73,7 @@
         </p>
         {% if profile.bio %}<p class="head-bio">{{ profile.bio }}</p>{% endif %}
         <div class="friend-stack" aria-hidden="true">
-          {% for friend in friends|slice:":4" %}<div class="avatar xs tone-{{ forloop.counter0 }}">{{ friend.initials }}</div>{% endfor %}
+          {% for friend in friends|slice:":4" %}<div class="avatar xs tone-{{ forloop.counter0 }}">{% if friend.image %}<img src="{% static friend.image %}" alt="{{ friend.name }}">{% else %}{{ friend.initials }}{% endif %}</div>{% endfor %}
         </div>
       </div>
 
@@ -119,7 +119,7 @@
 
       <section class="card friend-card" id="friends" aria-label="Friends">
         <div class="friend-row">
-          {% for friend in friends %}<div class="avatar sm tone-{{ forloop.counter0 }}" title="{{ friend.name }}">{{ friend.initials }}</div>{% endfor %}
+          {% for friend in friends %}<div class="avatar sm tone-{{ forloop.counter0 }}" title="{{ friend.name }}">{% if friend.image %}<img src="{% static friend.image %}" alt="{{ friend.name }}">{% else %}{{ friend.initials }}{% endif %}</div>{% endfor %}
         </div>
       </section>
 
@@ -142,7 +142,7 @@
         </button>
         {% for story in stories %}
         <button class="story" type="button" data-inert="Stories are a demo placeholder.">
-          <span class="story-avatar tone-{{ story.tone }}">{{ story.initials }}</span>
+          <span class="story-avatar tone-{{ story.tone }}">{% if story.image %}<img src="{% static story.image %}" alt="{{ story.handle }}">{% else %}{{ story.initials }}{% endif %}</span>
           <span class="story-label">{{ story.handle }}</span>
         </button>
         {% endfor %}
@@ -213,9 +213,9 @@
           </div>
           <div class="post-likes">
             <span class="mini-avatars" aria-hidden="true">
-              <span class="avatar tone-0">RM</span>
-              <span class="avatar tone-1">VD</span>
-              <span class="avatar tone-3">LP</span>
+              <span class="avatar tone-0"><img src="{% static 'img/babel/ramy.png' %}" alt=""></span>
+              <span class="avatar tone-1"><img src="{% static 'img/babel/victoire.png' %}" alt=""></span>
+              <span class="avatar tone-3"><img src="{% static 'img/babel/letty.png' %}" alt=""></span>
             </span>
             You and 24 others
           </div>

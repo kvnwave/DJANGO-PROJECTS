@@ -6,24 +6,24 @@ from .forms import PostForm, ProfileForm
 from .models import Profile
 
 SAMPLE_FRIENDS = (
-    "Ramy Mirza",
-    "Victoire Desgraves",
-    "Letty Price",
-    "Anthony Ribben",
-    "Griffin Harley",
-    "Evie Brooke",
-    "Professor Lovell",
-    "Professor Playfair",
-    "Mrs. Piper",
+    {"name": "Ramy Mirza", "image": "img/babel/ramy.png"},
+    {"name": "Victoire Desgraves", "image": "img/babel/victoire.png"},
+    {"name": "Letty Price", "image": "img/babel/letty.png"},
+    {"name": "Anthony Ribben", "image": "img/babel/anthony.png"},
+    {"name": "Griffin Harley", "image": "img/babel/griffin.png"},
+    {"name": "Evie Brooke", "image": "img/babel/evie.png"},
+    {"name": "Professor Lovell", "image": "img/babel/lovell.png"},
+    {"name": "Professor Playfair", "image": "img/babel/playfair.png"},
+    {"name": "Mrs. Piper", "image": "img/babel/piper.png"},
 )
 
 SAMPLE_STORIES = (
-    ("ramy", 0),
-    ("victoire", 1),
-    ("letty", 2),
-    ("griffin", 3),
-    ("anthony", 4),
-    ("evie", 5),
+    ("ramy", 0, "img/babel/ramy.png"),
+    ("victoire", 1, "img/babel/victoire.png"),
+    ("letty", 2, "img/babel/letty.png"),
+    ("griffin", 3, "img/babel/griffin.png"),
+    ("anthony", 4, "img/babel/anthony.png"),
+    ("evie", 5, "img/babel/evie.png"),
 )
 
 
@@ -61,10 +61,11 @@ def profile_detail(request):
 
     friends = [
         {
-            "name": name,
-            "initials": "".join(part[:1] for part in name.split()).upper(),
+            "name": entry["name"],
+            "initials": "".join(part[:1] for part in entry["name"].split()).upper(),
+            "image": entry["image"],
         }
-        for name in SAMPLE_FRIENDS
+        for entry in SAMPLE_FRIENDS
     ]
 
     stories = [
@@ -72,8 +73,9 @@ def profile_detail(request):
             "handle": handle,
             "initials": "".join(part[:1] for part in handle.split()).upper(),
             "tone": tone,
+            "image": image,
         }
-        for handle, tone in SAMPLE_STORIES
+        for handle, tone, image in SAMPLE_STORIES
     ]
 
     return render(
