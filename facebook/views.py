@@ -17,31 +17,40 @@ SAMPLE_FRIENDS = (
     "Miguel Torres",
 )
 
+SAMPLE_STORIES = (
+    ("mindcast", 0),
+    ("vibeteller", 1),
+    ("moodrealms", 2),
+    ("inkdrop", 3),
+    ("softpulse", 4),
+    ("dreamwave", 5),
+)
+
 SAMPLE_POSTS = (
     {
-        "time": "2h",
-        "text": "\u201cToo Much Of A Good Thing\u201d is out now on all streaming platforms. Thank you for putting it at number one.",
-        "likes": "2.4K",
-        "comments": "128",
-        "shares": "34",
+        "time": "12h ago",
+        "location": "Manila, Philippines",
+        "caption": "soft hues, slow days, and a heart full of stillness \u2026",
+        "likes": "107k",
+        "liked_by": "@vibeteller, @moodrealms and others liked this post!",
         "media": True,
         "tone": 0,
     },
     {
-        "time": "Yesterday at 9:14 PM",
-        "text": "Manila, you were unreal. Salamat for the sold-out night.",
-        "likes": "18K",
-        "comments": "342",
-        "shares": "96",
+        "time": "2d ago",
+        "location": "Quezon City",
+        "caption": "Manila, you were unreal. Salamat for the sold-out night.",
+        "likes": "18.2k",
+        "liked_by": "@inkdrop, @dreamwave and others liked this post!",
         "media": True,
         "tone": 2,
     },
     {
-        "time": "Monday at 11:02 AM",
-        "text": "New music soon.",
-        "likes": "5.2K",
-        "comments": "87",
-        "shares": "21",
+        "time": "5d ago",
+        "location": "Tagaytay",
+        "caption": "new music soon.",
+        "likes": "5.4k",
+        "liked_by": "@mindcast and others liked this post!",
         "media": False,
         "tone": 4,
     },
@@ -72,6 +81,15 @@ def profile_detail(request):
         for name in SAMPLE_FRIENDS
     ]
 
+    stories = [
+        {
+            "handle": handle,
+            "initials": "".join(part[:1] for part in handle.split()).upper(),
+            "tone": tone,
+        }
+        for handle, tone in SAMPLE_STORIES
+    ]
+
     return render(
         request,
         "facebook/profile.html",
@@ -80,6 +98,7 @@ def profile_detail(request):
             "form": form,
             "show_edit": show_edit,
             "friends": friends,
+            "stories": stories,
             "posts": SAMPLE_POSTS,
         },
     )
