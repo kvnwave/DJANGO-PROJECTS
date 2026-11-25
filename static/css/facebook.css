@@ -618,10 +618,7 @@ textarea.composer-input::placeholder { color: var(--text-soft); }
 .composer-actions .post-submit {
   flex: none;
   padding: 7px 22px;
-  display: none;
 }
-
-#post-form:focus-within .post-submit { display: inline-flex; }
 
 .empty-feed p {
   margin: 0;
