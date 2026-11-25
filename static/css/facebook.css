@@ -65,7 +65,7 @@ img { display: block; }
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #1877f2;
+  color: #0866ff;
   font-size: 25px;
   font-weight: 800;
   letter-spacing: -0.6px;
@@ -73,25 +73,6 @@ img { display: block; }
 }
 
 .brand svg { flex: none; }
-
-.brand-word { position: relative; }
-
-.brand-badge {
-  position: absolute;
-  top: -7px;
-  right: -16px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #0866ff;
-  border: 2px solid var(--surface);
-  color: #fff;
-  font-size: 10.5px;
-  font-weight: 700;
-  line-height: 1;
-  display: grid;
-  place-items: center;
-}
 
 .search {
   flex: 1;
