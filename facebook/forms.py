@@ -30,6 +30,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = (
             "profile_picture",
+            "cover_photo",
             "first_name",
             "last_name",
             "bio",
@@ -40,6 +41,9 @@ class ProfileForm(forms.ModelForm):
         )
         widgets = {
             "profile_picture": forms.FileInput(
+                attrs={"accept": "image/*", "class": "file-input"}
+            ),
+            "cover_photo": forms.FileInput(
                 attrs={"accept": "image/*", "class": "file-input"}
             ),
             "first_name": forms.TextInput(attrs=INPUT_ATTRS),

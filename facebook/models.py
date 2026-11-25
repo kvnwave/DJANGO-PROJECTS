@@ -9,6 +9,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=60)
     username = models.CharField(max_length=40, unique=True)
     profile_picture = models.ImageField(upload_to="profile_pictures/", blank=True)
+    cover_photo = models.ImageField(upload_to="cover_photos/", blank=True)
     bio = models.CharField(max_length=160, blank=True)
     location = models.CharField(max_length=120, blank=True)
     work = models.CharField(max_length=120, blank=True)

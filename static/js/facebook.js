@@ -80,6 +80,24 @@
     });
   }
 
+  var coverInput = document.getElementById("id_cover_photo");
+  var coverPreview = document.getElementById("cover-preview");
+  var coverFileName = document.getElementById("cover-file-name");
+  if (coverInput) {
+    coverInput.addEventListener("change", function () {
+      var file = coverInput.files && coverInput.files[0];
+      if (!file) return;
+      coverFileName.textContent =
+        file.name + " (" + Math.round(file.size / 1024) + " KB)";
+      var reader = new FileReader();
+      reader.onload = function () {
+        coverPreview.classList.add("has-image");
+        coverPreview.style.backgroundImage = "url(" + reader.result + ")";
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
   var tabs = document.querySelectorAll(".tabs a");
   tabs.forEach(function (tab) {
     tab.addEventListener("click", function () {

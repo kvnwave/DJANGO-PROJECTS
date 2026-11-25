@@ -49,8 +49,8 @@
 
 <main class="page">
   <section class="profile-shell">
-    <div class="cover" role="img" aria-label="Cover photo">
-      <button class="cover-btn" type="button" data-inert="Cover photo editing is not part of this activity.">
+    <div class="cover{% if profile.cover_photo %} has-image{% endif %}" role="img" aria-label="Cover photo"{% if profile.cover_photo %} style="background-image:url('{{ profile.cover_photo.url }}')"{% endif %}>
+      <button class="cover-btn" type="button" data-open="edit-modal">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
         Edit cover photo
       </button>
@@ -272,6 +272,15 @@
           {{ form.profile_picture }}
           <p class="hint" id="file-name">JPG or PNG, up to 5 MB.</p>
           {{ form.profile_picture.errors }}
+        </div>
+      </div>
+      <div class="photo-field">
+        <div class="cover-preview{% if profile.cover_photo %} has-image{% endif %}" id="cover-preview"{% if profile.cover_photo %} style="background-image:url('{{ profile.cover_photo.url }}')"{% endif %}></div>
+        <div class="photo-controls">
+          <label class="btn light small" for="id_cover_photo">Change cover</label>
+          {{ form.cover_photo }}
+          <p class="hint" id="cover-file-name">JPG or PNG, up to 5 MB.</p>
+          {{ form.cover_photo.errors }}
         </div>
       </div>
       {{ form.non_field_errors }}

@@ -228,6 +228,14 @@ img { display: block; }
   overflow: hidden;
 }
 
+.cover.has-image {
+  background-size: cover;
+  background-position: center;
+}
+
+.cover.has-image::before,
+.cover.has-image::after { display: none; }
+
 .cover::before,
 .cover::after {
   content: "";
@@ -942,6 +950,16 @@ textarea.composer-input::placeholder { color: var(--text-soft); }
 }
 
 .photo-controls { display: grid; gap: 6px; justify-items: start; }
+
+.cover-preview {
+  flex: none;
+  width: 160px;
+  height: 60px;
+  border-radius: var(--radius);
+  background: linear-gradient(120deg, #4f46e5, #7c3aed 55%, #c026d3);
+  background-size: cover;
+  background-position: center;
+}
 
 .hint { margin: 0; color: var(--text-soft); font-size: 12.5px; }
 
