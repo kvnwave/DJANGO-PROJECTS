@@ -65,7 +65,7 @@ img { display: block; }
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--accent);
+  color: #4267b2;
   font-size: 25px;
   font-weight: 800;
   letter-spacing: -0.6px;
@@ -197,7 +197,7 @@ img { display: block; }
 .profile-shell {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   box-shadow: var(--shadow);
 }
 
@@ -461,23 +461,12 @@ img { display: block; }
 
 /* Friends */
 
-.friend-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px 10px;
+.friend-row {
+  display: flex;
+  justify-content: center;
 }
 
-.friend { display: grid; justify-items: center; gap: 6px; }
-
-.friend .avatar { width: 68px; height: 68px; font-size: 21px; }
-
-.friend span {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 12.5px;
-}
+.friend-row .avatar + .avatar { margin-left: -10px; }
 
 /* Photos */
 
