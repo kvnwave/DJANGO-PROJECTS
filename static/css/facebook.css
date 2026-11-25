@@ -326,6 +326,14 @@ img { display: block; }
   font-size: 14px;
 }
 
+.head-bio {
+  margin: 4px 0 0;
+  max-width: 520px;
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
 .dot {
   width: 3px;
   height: 3px;

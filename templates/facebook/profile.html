@@ -75,6 +75,7 @@
           <span>{{ profile.friends_count }} friends</span>
           {% if profile.location %}<span class="dot" aria-hidden="true"></span><span>{{ profile.location }}</span>{% endif %}
         </p>
+        {% if profile.bio %}<p class="head-bio">{{ profile.bio }}</p>{% endif %}
         <div class="friend-stack" aria-hidden="true">
           {% for friend in friends|slice:":4" %}<div class="avatar xs tone-{{ forloop.counter0 }}">{{ friend.initials }}</div>{% endfor %}
         </div>
