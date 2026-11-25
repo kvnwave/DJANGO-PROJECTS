@@ -1,8 +1,21 @@
 from django import forms
 
-from .models import Profile
+from .models import Post, Profile
 
 INPUT_ATTRS = {"class": "input"}
+
+
+class PostForm(forms.ModelForm):
+    """Composer form for writing a text post on the profile page."""
+
+    class Meta:
+        model = Post
+        fields = ("content",)
+        widgets = {
+            "content": forms.Textarea(
+                attrs={"rows": 1, "class": "composer-input", "aria-label": "Write a post"}
+            )
+        }
 
 
 class ProfileForm(forms.ModelForm):

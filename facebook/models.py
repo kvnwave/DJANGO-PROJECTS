@@ -35,3 +35,19 @@ class Profile(models.Model):
         return "".join(
             part[:1] for part in (self.first_name, self.last_name) if part
         ).upper()
+
+
+class Post(models.Model):
+    """A text post written from the profile page composer."""
+
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name="posts"
+    )
+    content = models.TextField(max_length=1000)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ("-created_at",)
+
+    def __str__(self):
+        return f"{self.profile} — {self.content[:40]}"

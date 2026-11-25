@@ -88,6 +88,16 @@
     });
   });
 
+  var composer = document.querySelector("#post-form textarea");
+  if (composer) {
+    var resizeComposer = function () {
+      composer.style.height = "auto";
+      composer.style.height = Math.min(composer.scrollHeight, 220) + "px";
+    };
+    composer.addEventListener("input", resizeComposer);
+    composer.addEventListener("focus", resizeComposer);
+  }
+
   document.querySelectorAll("[data-like]").forEach(function (btn) {
     btn.addEventListener("click", function () {
       btn.classList.toggle("liked");

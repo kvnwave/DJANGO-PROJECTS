@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.http import Http404
 from django.shortcuts import redirect, render
 
-from .forms import ProfileForm
+from .forms import PostForm, ProfileForm
 from .models import Profile
 
 SAMPLE_FRIENDS = (
@@ -32,16 +32,32 @@ def profile_detail(request):
     if profile is None:
         raise Http404("No profile exists yet. Create one in the admin.")
 
+    show_edit = request.GET.get("edit") == "1"
+    form = ProfileForm(instance=profile)
+    post_form = None
+
     if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Your profile has been updated.")
-            return redirect("facebook:profile")
-        show_edit = True
-    else:
-        form = ProfileForm(instance=profile)
-        show_edit = request.GET.get("edit") == "1"
+        if request.POST.get("action") == "post":
+            post_form = PostForm(request.POST)
+            if post_form.is_valid():
+                post = post_form.save(commit=False)
+                post.profile = profile
+                post.save()
+                messages.success(request, "Your post has been shared.")
+                return redirect("facebook:profile")
+        else:
+            form = ProfileForm(request.POST, request.FILES, instance=profile)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Your profile has been updated.")
+                return redirect("facebook:profile")
+            show_edit = True
+
+    if post_form is None:
+        post_form = PostForm()
+    post_form.fields["content"].widget.attrs["placeholder"] = (
+        f"What's on your mind, {profile.first_name}?"
+    )
 
     friends = [
         {
@@ -69,5 +85,7 @@ def profile_detail(request):
             "show_edit": show_edit,
             "friends": friends,
             "stories": stories,
+            "post_form": post_form,
+            "posts": profile.posts.all(),
         },
     )
