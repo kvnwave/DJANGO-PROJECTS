@@ -1,0 +1,282 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<title>{{ profile.full_name }} | Facebook</title>
+{% if profile.profile_picture %}<link rel="icon" href="{{ profile.profile_picture.url }}">{% else %}<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><circle cx='18' cy='18' r='18' fill='%230866FF'/><g transform='translate(4.7 4.7) scale(0.74)' fill='%23fff'><path d='M20.181 35.87C9.976 34.73 2 26.07 2 15.5 2 7.18 8.84 1 18 1s16 6.18 16 14.5c0 10.57-7.976 19.23-18 20.37l-.446-.05h-.006v-9.884h3.348l.664-4.39h-4.012v-2.848c0-1.28.58-2.528 2.44-2.528h1.888V7.56s-1.714-.3-3.352-.3c-3.42 0-5.656 2.073-5.656 5.824v3.29H9.22v4.39h3.647v9.884h.013l.017.222z'/></g></svg>">{% endif %}
+<link rel="stylesheet" href="{% static 'css/facebook.css' %}">
+</head>
+<body>
+
+<nav class="topbar" aria-label="Facebook">
+  <div class="topbar-in">
+    <a class="brand" href="{% url 'facebook:profile' %}">
+      <svg width="27" height="27" viewBox="0 0 666.667 666.667" aria-hidden="true"><defs><clipPath id="a" clipPathUnits="userSpaceOnUse"><path d="M0 700h700V0H0Z"/></clipPath></defs><g clip-path="url(#a)" transform="matrix(1.33333 0 0 -1.33333 -133.333 800)"><path d="M0 0c0 138.071-111.929 250-250 250S-500 138.071-500 0c0-117.245 80.715-215.622 189.606-242.638v166.242h-51.552V0h51.552v32.919c0 85.092 38.508 124.532 122.048 124.532 15.838 0 43.167-3.105 54.347-6.211V81.986c-5.901.621-16.149.932-28.882.932-40.993 0-56.832-15.528-56.832-55.9V0h81.659l-14.028-76.396h-67.631v-171.773C-95.927-233.218 0-127.818 0 0" style="fill:#0866ff;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(600 350)"/><path d="m0 0 14.029 76.396H-67.63v27.019c0 40.372 15.838 55.899 56.831 55.899 12.733 0 22.981-.31 28.882-.931v69.253c-11.18 3.106-38.509 6.212-54.347 6.212-83.539 0-122.048-39.441-122.048-124.533V76.396h-51.552V0h51.552v-166.242a250.559 250.559 0 0 1 60.394-7.362c10.254 0 20.358.632 30.288 1.831V0Z" style="fill:#fff;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(447.918 273.604)"/></g></svg>
+      <span class="brand-word">facebook</span>
+    </a>
+    <label class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" placeholder="Search Facebook" aria-label="Search Facebook">
+    </label>
+    <div class="top-actions">
+      <button class="icon-btn" type="button" aria-label="Activity" data-inert="Activity is a demo placeholder.">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+      <button class="icon-btn" type="button" aria-label="Messages" data-inert="Messaging is not part of this activity.">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+      </button>
+      <div class="avatar tiny tone-0" aria-hidden="true">
+        {% if profile.profile_picture %}<img src="{{ profile.profile_picture.url }}" alt="">{% else %}{{ profile.initials }}{% endif %}
+      </div>
+    </div>
+  </div>
+</nav>
+
+{% if messages %}
+<div class="toasts" id="toasts" aria-live="polite">
+  {% for message in messages %}
+  <div class="toast">{{ message }}<button class="x" type="button" aria-label="Dismiss">&times;</button></div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<main class="page">
+  <section class="profile-shell">
+    <div class="cover{% if profile.cover_photo %} has-image{% endif %}" role="img" aria-label="Cover photo"{% if profile.cover_photo %} style="background-image:url('{{ profile.cover_photo.url }}')"{% endif %}>
+      <button class="cover-btn" type="button" data-open="edit-modal">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+        Edit cover photo
+      </button>
+    </div>
+
+    <div class="head-row">
+      <div class="avatar-wrap">
+        <div class="avatar xl">
+          {% if profile.profile_picture %}<img src="{{ profile.profile_picture.url }}" alt="{{ profile.full_name }}">{% else %}{{ profile.initials }}{% endif %}
+        </div>
+        <button class="avatar-cam" type="button" data-open="edit-modal" aria-label="Update profile picture" title="Update profile picture">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </button>
+      </div>
+
+      <div class="head-meta">
+        <h1 class="name">
+          {{ profile.full_name }}
+          <svg width="22" height="22" viewBox="0 0 24 24" role="img" aria-label="Verified"><circle cx="12" cy="12" r="12" fill="#7c3aed"/><path d="M7.2 12.6l3 3 6.6-7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </h1>
+        <p class="head-sub">
+          <span>{{ profile.friends_count }} friends</span>
+          {% if profile.location %}<span class="dot" aria-hidden="true"></span><span>{{ profile.location }}</span>{% endif %}
+        </p>
+        {% if profile.bio %}<p class="head-bio">{{ profile.bio }}</p>{% endif %}
+        <div class="friend-stack" aria-hidden="true">
+          {% for friend in friends|slice:":4" %}<div class="avatar xs tone-{{ forloop.counter0 }}">{% if friend.image %}<img src="{% static friend.image %}" alt="{{ friend.name }}">{% else %}{{ friend.initials }}{% endif %}</div>{% endfor %}
+        </div>
+      </div>
+
+      <div class="head-actions">
+        <button class="btn light" type="button" data-open="edit-modal">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+          Edit profile
+        </button>
+        <button class="btn blue" type="button" data-inert="Messaging is not part of this activity.">Message</button>
+      </div>
+    </div>
+  </section>
+
+  <nav class="tabs" aria-label="Profile sections">
+    <a class="on" href="#feed">Posts</a>
+    <a href="#about">About</a>
+    <a href="#friends">Friends</a>
+    <a href="#photos">Photos</a>
+  </nav>
+
+  <div class="content">
+    <aside class="col-side">
+      <section class="card" id="about">
+        <h2>About</h2>
+        <ul class="about-list">
+          {% if profile.work %}
+          <li><span class="about-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span>{{ profile.work }}</span></li>
+          {% endif %}
+          {% if profile.education %}
+          <li><span class="about-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span><span>Studied at {{ profile.education }}</span></li>
+          {% endif %}
+          {% if profile.location %}
+          <li><span class="about-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span>Lives in {{ profile.location }}</span></li>
+          {% endif %}
+          {% if profile.relationship %}
+          <li><span class="about-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span><span>{{ profile.relationship }}</span></li>
+          {% endif %}
+          {% if profile.joined_on %}
+          <li><span class="about-icon"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span>Joined {{ profile.joined_on|date:"F Y" }}</span></li>
+          {% endif %}
+        </ul>
+      </section>
+
+      <section class="card friend-card" id="friends" aria-label="Friends">
+        <div class="friend-row">
+          {% for friend in friends %}<div class="avatar sm tone-{{ forloop.counter0 }}" title="{{ friend.name }}">{% if friend.image %}<img src="{% static friend.image %}" alt="{{ friend.name }}">{% else %}{{ friend.initials }}{% endif %}</div>{% endfor %}
+        </div>
+      </section>
+
+      <section class="card" id="photos">
+        <h2>Photos <a class="see-all" href="#photos">See all</a></h2>
+        <div class="photo-grid" aria-hidden="true">
+          {% for n in "123456" %}<div class="tile tone-{{ forloop.counter0 }}"></div>{% endfor %}
+        </div>
+      </section>
+    </aside>
+
+    <section class="col-main" id="feed">
+      <section class="stories" aria-label="Stories">
+        <button class="story" type="button" data-open="edit-modal" title="Update profile picture">
+          <span class="story-avatar tone-4">
+            {% if profile.profile_picture %}<img src="{{ profile.profile_picture.url }}" alt="">{% else %}{{ profile.initials }}{% endif %}
+            <span class="story-plus" aria-hidden="true"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </span>
+          <span class="story-label">Your Loop</span>
+        </button>
+        {% for story in stories %}
+        <button class="story" type="button" data-inert="Stories are a demo placeholder.">
+          <span class="story-avatar tone-{{ story.tone }}">{% if story.image %}<img src="{% static story.image %}" alt="{{ story.handle }}">{% else %}{{ story.initials }}{% endif %}</span>
+          <span class="story-label">{{ story.handle }}</span>
+        </button>
+        {% endfor %}
+      </section>
+
+      <div class="card composer">
+        <form id="post-form" method="post" action="{% url 'facebook:profile' %}">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="post">
+          <div class="composer-row">
+            <div class="avatar sm tone-2">
+              {% if profile.profile_picture %}<img src="{{ profile.profile_picture.url }}" alt="">{% else %}{{ profile.initials }}{% endif %}
+            </div>
+            {{ post_form.content }}
+          </div>
+          {{ post_form.content.errors }}
+          <div class="composer-actions">
+            <button type="button" data-inert="Live video is a demo placeholder.">
+              <svg class="ic-live" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+              Live video
+            </button>
+            <button type="button" data-inert="Photo posts are a demo placeholder.">
+              <svg class="ic-photo" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+              Photo/video
+            </button>
+            <button type="button" data-inert="Feelings are a demo placeholder.">
+              <svg class="ic-feel" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>
+              Feeling/activity
+            </button>
+            <button class="btn blue post-submit" type="submit" disabled title="Posting is disabled for this activity.">Post</button>
+          </div>
+        </form>
+      </div>
+
+      {% if posts %}
+        {% for post in posts %}
+        <article class="card post">
+          <div class="post-head">
+            <div class="avatar sm tone-4">
+              {% if profile.profile_picture %}<img src="{{ profile.profile_picture.url }}" alt="">{% else %}{{ profile.initials }}{% endif %}
+            </div>
+            <div class="post-id">
+              <p class="post-name">
+                {{ profile.full_name }}
+                <svg width="15" height="15" viewBox="0 0 24 24" role="img" aria-label="Verified"><circle cx="12" cy="12" r="12" fill="#7c3aed"/><path d="M7.2 12.6l3 3 6.6-7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </p>
+              <p class="post-meta">
+                {{ post.created_at|timesince }} ago ·
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Public
+              </p>
+            </div>
+            <button class="more-btn" type="button" aria-label="Post options" data-inert="Post options are a demo placeholder.">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>
+            </button>
+          </div>
+          <p class="post-caption">{{ post.content|linebreaksbr }}</p>
+          <div class="post-actions">
+            <button type="button" data-like aria-label="Like" title="Like">
+              <svg class="ic-like" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </button>
+            <button type="button" aria-label="Comment" title="Comment" data-inert="Comments are a demo placeholder.">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </button>
+            <button type="button" aria-label="Share" title="Share" data-inert="Shares are a demo placeholder.">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+            </button>
+          </div>
+          <div class="post-likes">
+            <span class="mini-avatars" aria-hidden="true">
+              <span class="avatar tone-0"><img src="{% static 'img/babel/ramy.png' %}" alt=""></span>
+              <span class="avatar tone-1"><img src="{% static 'img/babel/victoire.png' %}" alt=""></span>
+              <span class="avatar tone-3"><img src="{% static 'img/babel/letty.png' %}" alt=""></span>
+            </span>
+            You and 24 others
+          </div>
+        </article>
+        {% endfor %}
+      {% else %}
+        <div class="card empty-feed"><p>No posts yet — share your first post above.</p></div>
+      {% endif %}
+    </section>
+  </div>
+</main>
+
+<div class="modal{% if show_edit %} open{% endif %}" id="edit-modal" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+  <div class="backdrop" data-close></div>
+  <form class="modal-card" method="post" enctype="multipart/form-data" action="{% url 'facebook:profile' %}" novalidate>
+    {% csrf_token %}
+    <header class="modal-head">
+      <h2 id="edit-title">Edit profile</h2>
+      <button class="modal-x" type="button" data-close aria-label="Close">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+      </button>
+    </header>
+    <div class="modal-body">
+      <div class="photo-field">
+        <div class="avatar lg" id="avatar-preview">
+          {% if profile.profile_picture %}<img src="{{ profile.profile_picture.url }}" alt="Current profile picture">{% else %}{{ profile.initials }}{% endif %}
+        </div>
+        <div class="photo-controls">
+          <label class="btn light small" for="id_profile_picture">Change photo</label>
+          {{ form.profile_picture }}
+          <p class="hint" id="file-name">JPG or PNG, up to 5 MB.</p>
+          {{ form.profile_picture.errors }}
+        </div>
+      </div>
+      <div class="photo-field">
+        <div class="cover-preview{% if profile.cover_photo %} has-image{% endif %}" id="cover-preview"{% if profile.cover_photo %} style="background-image:url('{{ profile.cover_photo.url }}')"{% endif %}></div>
+        <div class="photo-controls">
+          <label class="btn light small" for="id_cover_photo">Change cover</label>
+          {{ form.cover_photo }}
+          <p class="hint" id="cover-file-name">JPG or PNG, up to 5 MB.</p>
+          {{ form.cover_photo.errors }}
+        </div>
+      </div>
+      {{ form.non_field_errors }}
+      <div class="row-2">
+        <div class="field">{{ form.first_name.label_tag }}{{ form.first_name }}{{ form.first_name.errors }}</div>
+        <div class="field">{{ form.last_name.label_tag }}{{ form.last_name }}{{ form.last_name.errors }}</div>
+      </div>
+      <div class="field">{{ form.bio.label_tag }}{{ form.bio }}{{ form.bio.errors }}</div>
+      <div class="field">{{ form.location.label_tag }}{{ form.location }}{{ form.location.errors }}</div>
+      <div class="field">{{ form.work.label_tag }}{{ form.work }}{{ form.work.errors }}</div>
+      <div class="field">{{ form.education.label_tag }}{{ form.education }}{{ form.education.errors }}</div>
+      <div class="field">{{ form.relationship.label_tag }}{{ form.relationship }}{{ form.relationship.errors }}</div>
+    </div>
+    <footer class="modal-foot">
+      <button class="btn light" type="button" data-close>Cancel</button>
+      <button class="btn blue" type="submit">Save</button>
+    </footer>
+  </form>
+</div>
+
+<script src="{% static 'js/facebook.js' %}"></script>
+</body>
+</html>
