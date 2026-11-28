@@ -348,6 +348,13 @@ img { display: block; }
 .btn.light:hover { background: var(--btn-light-hover); }
 .btn.small { padding: 6px 12px; font-size: 13px; }
 
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn.blue:disabled:hover { background: var(--accent); }
+
 /* ---------- Tabs ---------- */
 
 .tabs {
